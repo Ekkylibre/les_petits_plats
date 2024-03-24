@@ -2,6 +2,12 @@ body {
     background-color: #EDEDED;
 }
 
+main {
+    padding-top: 21px;
+    margin-right: 300px;
+    margin-left: 300px;
+}
+
 /* Header */
 header {
     background-image: url("../lampos-aritonang-24gR_9lCdes-unsplash.png");
@@ -19,6 +25,8 @@ header {
     img {
         margin-top: 51px;
         margin-left: 69px;
+        width: 180.35px;
+        height: 25.26px;
     }
 
     h1 {
@@ -47,25 +55,30 @@ header {
         position: absolute;
         transform: translateX(-125%);
         margin-top: 10px;
+        cursor: pointer;
     }
 }
 
 /* Dropdown */
 
 main {
-    margin-left: 104px;
-    padding-top: 21px;
-
-    .dropdown {
-        .dropdown-toggle {
-            width: 195px;
-            padding: 17px;
-        }
-    }
-
     .dropdown-container {
         display: flex;
-        gap: 66px;
+        justify-content: space-between;
+        align-items: center;
+        font-family: "Anton", sans-serif;
+
+        .dropdown-button {
+            display: flex;
+            gap: 66px;
+    
+            .dropdown {
+                .dropdown-toggle {
+                    width: 195px;
+                    padding: 17px;
+                }
+            }
+        }
 
         .dropdown-menu {
             .dropdown-item {
@@ -74,5 +87,85 @@ main {
                 }
             }
         }
+
+        p {
+            margin-bottom: 0;
+        }
+    }
+}
+
+/* Recipes Cards */
+
+main {
+    .recipes-cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 66px 48px;
+        padding-top: 55px;
+
+        .recipe-content {
+            width: 380px;
+            height: 731px;
+            background-color: white;
+            border-radius: 21px;
+            box-shadow: 0px 4px 34px 30px rgba(0, 0, 0, 0.04);
+            
+            .recipe-img {
+                width: 380px;
+                height: 253px;
+                border-radius: 21px 21px 0 0;
+                object-fit: cover;
+            }
+        
+            .recipe-info {
+                padding: 25px;
+
+                h2 {
+                    font-family: "Anton", sans-serif;
+                    font-size: 18px;
+                    padding-top: 16px;
+                    margin-bottom: 0;
+                }
+
+                .recipe-time {
+                    font-size: 12px;
+                    position: absolute;
+                    transform: translate(270px, -290px);
+                    background-color: #FFD15B;
+                    padding: 5px 15px 5px 15px;
+                    border-radius: 14px;
+                }
+
+                .font-manrope{
+                    font-family: "Manrope", sans-serif;
+                    font-size: 14px;
+                    padding-top: 29px;
+
+                    .recipe-title {
+                        color: #7A7A7A;
+                    }
+                    
+                    .recipe-description {
+                        height: 90px;
+                        overflow: hidden;
+                    }
+                    
+                    .ingredients-grid {
+                        display: grid;
+                        grid-template-columns: repeat(2, 1fr);
+
+                        .ingredient-ingredient{
+                            font-weight: bold;
+                            margin-bottom: 0;
+                        }
+
+                        .ingredient-quantity {
+                            color: #7A7A7A;
+                        }
+                    }
+                }
+            }
+        }
+        
     }
 }

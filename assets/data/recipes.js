@@ -1,7 +1,7 @@
 const recipes = [
     {
         "id": 1,
-        "image": "Recette01.jpg",
+        "image": "../images/Recette01.jpg",
         "name" : "Limonade de Coco",
         "servings" : 1,
         "ingredients": [
@@ -1774,3 +1774,5 @@ const recipes = [
         "ustensils":["rouleau à patisserie","fouet"]
     }
 ]
+
+export default recipes;
