@@ -1,3 +1,8 @@
+body {
+    background-color: #EDEDED;
+}
+
+/* Header */
 header {
     background-image: url("../lampos-aritonang-24gR_9lCdes-unsplash.png");
     height: 667px;
@@ -19,17 +24,18 @@ header {
     h1 {
         color: #FFD15B;
         font-weight: bold;
-        margin-top: 245px;
+        margin-top: 200px;
     }
 
     input {
         width: 954px;
         height: 72px;
         border-radius: 11px;
+        border: none;
+        padding-left: 35px;
 
         &::placeholder {
             font-size: 16px;
-            padding-left: 35px;
         }
     }
 
@@ -41,5 +47,32 @@ header {
         position: absolute;
         transform: translateX(-125%);
         margin-top: 10px;
+    }
+}
+
+/* Dropdown */
+
+main {
+    margin-left: 104px;
+    padding-top: 21px;
+
+    .dropdown {
+        .dropdown-toggle {
+            width: 195px;
+            padding: 17px;
+        }
+    }
+
+    .dropdown-container {
+        display: flex;
+        gap: 66px;
+
+        .dropdown-menu {
+            .dropdown-item {
+                &:hover {
+                    background-color: #FFD15B;
+                }
+            }
+        }
     }
 }
