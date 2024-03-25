@@ -1,41 +1,50 @@
+// Importez les données des recettes
 import recipes from '../assets/data/recipes.js';
 
-// Sélection de la balise <div> où nous voulons afficher les recettes
-const recipesDiv = document.querySelector('.recipes-cards');
+// Définir la classe Recipe
+class Recipe {
+    constructor(name, image, time, description, ingredients) {
+        this.name = name;
+        this.image = image;
+        this.time = time;
+        this.description = description;
+        this.ingredients = ingredients;
+    }
 
-// Parcourir toutes les recettes et construire le HTML pour les afficher
-recipes.forEach(recipe => {
-    // Créer un élément de type <div> pour chaque recette
-    const recipeCard = document.createElement('recipe-content');
-
-    // Construire le contenu HTML de la carte de recette
-    const recipeContent = `
-    <div class="recipe-content">
-        <img class="recipe-img" src="../assets/images/${recipe.image}" alt="${recipe.name}">
-        <div class="recipe-info">
-            <h2>${recipe.name}</h2>
-            <p class="recipe-time">${recipe.time} min</p>
-            <div class="font-manrope">
-                <p class="recipe-title">RECETTE</p>
-                <p class="recipe-description">${recipe.description}</p>
-                <p class="recipe-title">INGRÉDIENTS</p>
-                <div class="ingredients-grid">
-                    ${recipe.ingredients.map(ingredient => `
-                    <div>
-                        <p class="ingredient-ingredient">${ingredient.ingredient}</p>
-                        <p class="ingredient-quantity"> ${ingredient.quantity || '0'} ${ingredient.unit || ''}</p>
+    render() {
+        return `
+        <div class="recipe-content">
+            <img class="recipe-img" src="../assets/images/${this.image}" alt="${this.name}">
+            <div class="recipe-info">
+                <h2>${this.name}</h2>
+                <p class="recipe-time">${this.time} min</p>
+                <div class="font-manrope">
+                    <p class="recipe-title">RECETTE</p>
+                    <p class="recipe-description">${this.description}</p>
+                    <p class="recipe-title">INGRÉDIENTS</p>
+                    <div class="ingredients-grid">
+                        ${this.ingredients.map(ingredient => `
+                        <div>
+                            <p class="ingredient-ingredient">${ingredient.ingredient}</p>
+                            <p class="ingredient-quantity"> ${ingredient.quantity || '0'} ${ingredient.unit || ''}</p>
+                        </div>
+                        `).join('')}
                     </div>
-                    `).join('')}
                 </div>
             </div>
-        </div class="recipe-description">
-    </div>
-`;
+        </div>
+        `;
+    }
+}
 
+// Sélectionnez la balise <div> où vous voulez afficher les recettes
+const recipesDiv = document.querySelector('.recipes-cards');
 
-    // Mettre le contenu HTML dans la carte de recette
-    recipeCard.innerHTML = recipeContent;
-
-    // Ajouter la carte de recette à la balise <div> des recettes
-    recipesDiv.appendChild(recipeCard);
+// Parcourez toutes les recettes, créez une instance de Recipe pour chacune et affichez-la
+recipes.forEach(recipeData => {
+    const recipe = new Recipe(recipeData.name, recipeData.image, recipeData.time, recipeData.description, recipeData.ingredients);
+    const recipeHtml = recipe.render();
+    const recipeElement = document.createElement('div');
+    recipeElement.innerHTML = recipeHtml;
+    recipesDiv.appendChild(recipeElement);
 });
