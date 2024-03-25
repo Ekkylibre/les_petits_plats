@@ -1,130 +1,59 @@
 import recipes from '../assets/data/recipes.js';
 
-// Classe représentant un ingrédient
-class Ingredient {
-    constructor(name) {
-        this.name = name.toLowerCase();
-    }
-}
+// Fonction générique pour récupérer et stocker des éléments uniques
+function getUniqueItems(items, Constructor) {
+    const itemList = {};
 
-// Fonction pour récupérer tous les ingrédients et les stocker
-function getAllIngredients(recipes) {
-    const ingredientsList = {};
-
-    recipes.forEach(recipe => {
-        recipe.ingredients.forEach(ingredient => {
-            const ingredientName = ingredient.ingredient.toLowerCase();
-            if (!ingredientsList[ingredientName]) {
-                // Créer une nouvelle instance de l'ingrédient s'il n'existe pas déjà dans la liste
-                ingredientsList[ingredientName] = new Ingredient(ingredientName);
-            }
-        });
-    });
-
-    return ingredientsList;
-}
-
-const allIngredients = getAllIngredients(recipes);
-
-// Fonction pour générer les balises <li> avec les noms d'ingrédients
-function generateIngredientList(ingredients) {
-    const ingredientListItems = Object.keys(ingredients).map(ingredientName => {
-        return `<li><a class="dropdown-item" href="#">${ingredientName}</a></li>`;
-    });
-
-    return ingredientListItems.join('');
-}
-
-// Générer la liste d'ingrédients
-const ingredientListHTML = generateIngredientList(allIngredients);
-
-// Ajouter la liste d'ingrédients au DOM
-const ingredientDropdownMenu = document.querySelector('.dropdown-menu-ingredient');
-ingredientDropdownMenu.insertAdjacentHTML('beforeend', ingredientListHTML);
-
-
-/**/
-
-// Classe représentant un appareil
-class Appliance {
-    constructor(name) {
-        this.name = name.toLowerCase();
-    }
-}
-
-// Fonction pour récupérer tous les appareils et les stocker
-function getAllAppliances(recipes) {
-    const appliancesList = {};
-
-    recipes.forEach(recipe => {
-        const applianceName = recipe.appliance.toLowerCase();
-        if (!appliancesList[applianceName]) {
-            // Créer une nouvelle instance de l'appareil s'il n'existe pas déjà dans la liste
-            appliancesList[applianceName] = new Appliance(applianceName);
+    items.forEach(item => {
+        const itemName = item.toLowerCase();
+        if (!itemList[itemName]) {
+            itemList[itemName] = new Constructor(itemName);
         }
     });
 
-    return appliancesList;
+    return itemList;
 }
 
-const allAppliances = getAllAppliances(recipes);
-
-// Fonction pour générer les balises <li> avec les noms d'appareils
-function generateApplianceList(appliances) {
-    const applianceListItems = Object.keys(appliances).map(applianceName => {
-        return `<li><a class="dropdown-item" href="#">${applianceName}</a></li>`;
-    });
-
-    return applianceListItems.join('');
-}
-
-// Générer la liste d'appareils
-const applianceListHTML = generateApplianceList(allAppliances);
-
-// Ajouter la liste d'appareils au DOM
-const applianceDropdownMenu = document.querySelector('.dropdown-menu-appliance');
-applianceDropdownMenu.insertAdjacentHTML('beforeend', applianceListHTML);
-
-/**/
-
-// Classe représentant un ustensile
-class Utensil {
+// Classe générique représentant un élément
+class Item {
     constructor(name) {
         this.name = name.toLowerCase();
     }
 }
 
-// Fonction pour récupérer tous les ustensiles et les stocker
-function getAllUtensils(recipes) {
-    const utensilsList = {};
-
-    recipes.forEach(recipe => {
-        recipe.ustensils.forEach(utensil => {
-            const utensilName = utensil.toLowerCase();
-            if (!utensilsList[utensilName]) {
-                // Créer une nouvelle instance de l'ustensile s'il n'existe pas déjà dans la liste
-                utensilsList[utensilName] = new Utensil(utensilName);
-            }
-        });
-    });
-
-    return utensilsList;
+// Fonction générique pour générer des listes d'éléments
+function generateItemList(items) {
+    return Object.keys(items).map(itemName => {
+        return `<li><a class="dropdown-item" href="#">${itemName}</a></li>`;
+    }).join('');
 }
 
-const allUtensils = getAllUtensils(recipes);
-
-// Fonction pour générer les balises <li> avec les noms d'ustensiles
-function generateUtensilList(utensils) {
-    const utensilListItems = Object.keys(utensils).map(utensilName => {
-        return `<li><a class="dropdown-item" href="#">${utensilName}</a></li>`;
-    });
-
-    return utensilListItems.join('');
+// Ajouter une liste d'éléments au DOM
+function addListToDOM(selector, itemList) {
+    const dropdownMenu = document.querySelector(selector);
+    dropdownMenu.insertAdjacentHTML('beforeend', itemList);
 }
 
-// Générer la liste d'ustensiles
-const utensilListHTML = generateUtensilList(allUtensils);
+// Récupérer et stocker tous les ingrédients, appareils et ustensiles
+const allIngredients = getUniqueItems(
+    recipes.flatMap(recipe => recipe.ingredients.map(ingredient => ingredient.ingredient)),
+    Item
+);
+const allAppliances = getUniqueItems(
+    recipes.map(recipe => recipe.appliance),
+    Item
+);
+const allUtensils = getUniqueItems(
+    recipes.flatMap(recipe => recipe.ustensils),
+    Item
+);
 
-// Ajouter la liste d'ustensiles au DOM
-const utensilDropdownMenu = document.querySelector('.dropdown-menu-utensil');
-utensilDropdownMenu.insertAdjacentHTML('beforeend', utensilListHTML);
+// Générer les listes d'ingrédients, appareils et ustensiles
+const ingredientListHTML = generateItemList(allIngredients);
+const applianceListHTML = generateItemList(allAppliances);
+const utensilListHTML = generateItemList(allUtensils);
+
+// Ajouter les listes au DOM
+addListToDOM('.dropdown-menu-ingredient', ingredientListHTML);
+addListToDOM('.dropdown-menu-appliance', applianceListHTML);
+addListToDOM('.dropdown-menu-utensil', utensilListHTML);
