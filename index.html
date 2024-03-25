@@ -20,7 +20,8 @@
     <!-- Manrope-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@200..800&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
@@ -45,34 +46,34 @@
                         aria-expanded="false">
                         Ingrédients
                     </button>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu dropdown-menu-ingredient">
+                        <!-- Liste d'ingrédients sera ajoutée ici -->
                         <input type="text">
                         <i class="bi bi-search"></i>
-                        <li><a class="dropdown-item" href="#">Action</a></li>
                     </ul>
                 </div>
-                
+
                 <div class="dropdown">
                     <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
                         Appareils
                     </button>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu dropdown-menu-appliance">
+                        <!-- Liste d'appareils sera ajoutée ici -->
                         <input type="text">
                         <i class="bi bi-search"></i>
-                        <li><a class="dropdown-item" href="#">Action</a></li>
                     </ul>
                 </div>
-                
+
                 <div class="dropdown">
                     <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
                         Ustensiles
                     </button>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu dropdown-menu-utensil">
+                        <!-- Liste d'ustensiles sera ajoutée ici -->
                         <input type="text">
                         <i class="bi bi-search"></i>
-                        <li><a class="dropdown-item" href="#">Action</a></li>
                     </ul>
                 </div>
             </div>
@@ -89,6 +90,7 @@
         crossorigin="anonymous"></script>
 
     <script type="module" src="/scripts/card.js"></script>
+    <script type="module" src="/scripts/filters.js"></script>
 </body>
 
 </html>

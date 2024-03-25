@@ -86,6 +86,13 @@ main {
                     width: 195px;
                     padding: 17px;
                 }
+
+                .dropdown-menu-ingredient,
+                .dropdown-menu-appliance,
+                .dropdown-menu-utensil {
+                    height: 324px;
+                    overflow: hidden;
+                }
             }
         }
 

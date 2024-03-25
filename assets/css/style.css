@@ -78,6 +78,12 @@ main .dropdown-container .dropdown-button .dropdown .dropdown-toggle {
   width: 195px;
   padding: 17px;
 }
+main .dropdown-container .dropdown-button .dropdown .dropdown-menu-ingredient,
+main .dropdown-container .dropdown-button .dropdown .dropdown-menu-appliance,
+main .dropdown-container .dropdown-button .dropdown .dropdown-menu-utensil {
+  height: 324px;
+  overflow: hidden;
+}
 main .dropdown-container .dropdown-menu input {
   margin: auto 16px 11px 16px;
 }
