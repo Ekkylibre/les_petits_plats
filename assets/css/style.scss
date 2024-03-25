@@ -20,6 +20,10 @@ header {
         flex-direction: column;
         justify-content: center;
         align-items: center;
+
+        .search-bar {
+            padding-top: 30px;
+        }
     }
 
     img {
@@ -31,8 +35,9 @@ header {
 
     h1 {
         color: #FFD15B;
-        font-weight: bold;
-        margin-top: 200px;
+        font-family: "Anton", sans-serif;
+        margin-top: 180px;
+        text-align: center;
     }
 
     input {
@@ -56,6 +61,11 @@ header {
         transform: translateX(-125%);
         margin-top: 10px;
         cursor: pointer;
+
+        &:hover {
+            color: black;
+            background-color: #FFD15B;
+        }
     }
 }
 
@@ -66,12 +76,11 @@ main {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        font-family: "Anton", sans-serif;
 
         .dropdown-button {
             display: flex;
             gap: 66px;
-    
+
             .dropdown {
                 .dropdown-toggle {
                     width: 195px;
@@ -81,6 +90,17 @@ main {
         }
 
         .dropdown-menu {
+
+            input {
+                margin: auto 16px 11px 16px;
+            }
+
+            .bi-search {
+                position: absolute;
+                transform: translate(-40px, 3px);
+                cursor: pointer;
+            }
+
             .dropdown-item {
                 &:hover {
                     background-color: #FFD15B;
@@ -90,6 +110,7 @@ main {
 
         p {
             margin-bottom: 0;
+            font-family: "Anton", sans-serif;
         }
     }
 }
@@ -109,14 +130,14 @@ main {
             background-color: white;
             border-radius: 21px;
             box-shadow: 0px 4px 34px 30px rgba(0, 0, 0, 0.04);
-            
+
             .recipe-img {
                 width: 380px;
                 height: 253px;
                 border-radius: 21px 21px 0 0;
                 object-fit: cover;
             }
-        
+
             .recipe-info {
                 padding: 25px;
 
@@ -136,7 +157,7 @@ main {
                     border-radius: 14px;
                 }
 
-                .font-manrope{
+                .font-manrope {
                     font-family: "Manrope", sans-serif;
                     font-size: 14px;
                     padding-top: 29px;
@@ -144,17 +165,17 @@ main {
                     .recipe-title {
                         color: #7A7A7A;
                     }
-                    
+
                     .recipe-description {
                         height: 90px;
                         overflow: hidden;
                     }
-                    
+
                     .ingredients-grid {
                         display: grid;
                         grid-template-columns: repeat(2, 1fr);
 
-                        .ingredient-ingredient{
+                        .ingredient-ingredient {
                             font-weight: bold;
                             margin-bottom: 0;
                         }
@@ -166,6 +187,6 @@ main {
                 }
             }
         }
-        
+
     }
 }

@@ -21,6 +21,9 @@ header .header-container {
   justify-content: center;
   align-items: center;
 }
+header .header-container .search-bar {
+  padding-top: 30px;
+}
 header img {
   margin-top: 51px;
   margin-left: 69px;
@@ -29,8 +32,9 @@ header img {
 }
 header h1 {
   color: #FFD15B;
-  font-weight: bold;
-  margin-top: 200px;
+  font-family: "Anton", sans-serif;
+  margin-top: 180px;
+  text-align: center;
 }
 header input {
   width: 954px;
@@ -55,13 +59,16 @@ header .bi-search {
   margin-top: 10px;
   cursor: pointer;
 }
+header .bi-search:hover {
+  color: black;
+  background-color: #FFD15B;
+}
 
 /* Dropdown */
 main .dropdown-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-family: "Anton", sans-serif;
 }
 main .dropdown-container .dropdown-button {
   display: flex;
@@ -71,11 +78,20 @@ main .dropdown-container .dropdown-button .dropdown .dropdown-toggle {
   width: 195px;
   padding: 17px;
 }
+main .dropdown-container .dropdown-menu input {
+  margin: auto 16px 11px 16px;
+}
+main .dropdown-container .dropdown-menu .bi-search {
+  position: absolute;
+  transform: translate(-40px, 3px);
+  cursor: pointer;
+}
 main .dropdown-container .dropdown-menu .dropdown-item:hover {
   background-color: #FFD15B;
 }
 main .dropdown-container p {
   margin-bottom: 0;
+  font-family: "Anton", sans-serif;
 }
 
 /* Recipes Cards */
