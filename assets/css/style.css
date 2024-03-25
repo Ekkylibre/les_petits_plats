@@ -100,6 +100,25 @@ main .dropdown-container p {
   font-family: "Anton", sans-serif;
 }
 
+/* Label Search*/
+.parent-div {
+  display: flex;
+  padding-top: 21px;
+  gap: 20px;
+}
+
+.selected-item {
+  background-color: #FFD15B;
+  padding: 18px;
+  border-radius: 10px;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-weight: bold;
+}
+
 /* Recipes Cards */
 main .recipes-cards {
   display: grid;
