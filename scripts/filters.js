@@ -196,7 +196,7 @@ function filterRecipesByUtensil(utensilName) {
 }
 
 // Fonction pour mettre à jour le DOM avec les recettes filtrées
-function updateRecipesDOM(filteredRecipes) {
+export function updateRecipesDOM(filteredRecipes) {
     const recipesContainer = document.querySelector('.recipes-cards');
     recipesContainer.innerHTML = '';
     filteredRecipes.forEach(recipe => {
