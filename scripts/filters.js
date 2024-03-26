@@ -77,6 +77,14 @@ function addClickEventToItems(selector, category) {
 function closeItem(event) {
     const selectedItem = event.target.parentElement; // L'élément parent contient à la fois l'élément sélectionné et le bouton de fermeture
     selectedItem.remove(); // Supprimer l'élément sélectionné de l'affichage uniquement
+
+    // Vérifier si des éléments sélectionnés restent après la fermeture
+    const remainingItems = document.querySelectorAll('.selected-item');
+
+    // Si aucun élément sélectionné n'est trouvé, afficher toutes les recettes
+    if (remainingItems.length === 0) {
+        displayAllRecipes();
+    }
 }
 
 // Fonction pour afficher un élément
@@ -141,12 +149,19 @@ searchInputs.forEach(input => {
 function displayAllRecipes() {
     const recipesContainer = document.querySelector('.recipes-cards');
     recipesContainer.innerHTML = '';
-    // Afficher toutes les recettes dans le DOM
-    recipes.forEach(recipe => {
-        const recipeInstance = new Recipe(recipe.name, recipe.image, recipe.time, recipe.description, recipe.ingredients);
-        recipesContainer.insertAdjacentHTML('beforeend', recipeInstance.render());
-    });
+
+    // Vérifier si des éléments sélectionnés sont déjà présents
+    const selectedItems = document.querySelectorAll('.selected-item');
+
+    // Si aucun élément sélectionné n'est trouvé, afficher toutes les recettes
+    if (selectedItems.length === 0) {
+        recipes.forEach(recipe => {
+            const recipeInstance = new Recipe(recipe.name, recipe.image, recipe.time, recipe.description, recipe.ingredients);
+            recipesContainer.insertAdjacentHTML('beforeend', recipeInstance.render());
+        });
+    }
 }
+
 
 // Modifier la fonction pour filtrer les recettes en fonction des ingrédients sélectionnés
 function filterRecipesByIngredient(ingredientName) {
