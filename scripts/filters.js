@@ -36,15 +36,15 @@ function addListToDOM(selector, itemList) {
 }
 
 // Récupérer et stocker tous les ingrédients, appareils et ustensiles
-const allIngredients = getUniqueItems(
+export const allIngredients = getUniqueItems(
     recipes.flatMap(recipe => recipe.ingredients.map(ingredient => ingredient.ingredient)),
     Item
 );
-const allAppliances = getUniqueItems(
+export const allAppliances = getUniqueItems(
     recipes.map(recipe => recipe.appliance),
     Item
 );
-const allUtensils = getUniqueItems(
+export const allUtensils = getUniqueItems(
     recipes.flatMap(recipe => recipe.ustensils),
     Item
 );

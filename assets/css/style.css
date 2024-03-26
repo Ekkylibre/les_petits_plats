@@ -63,6 +63,12 @@ header .bi-search:hover {
   color: black;
   background-color: #FFD15B;
 }
+header .suggestions-container {
+  background-color: white;
+}
+header .suggestions-container ul {
+  list-style-type: none;
+}
 
 /* Dropdown */
 main .dropdown-container {
