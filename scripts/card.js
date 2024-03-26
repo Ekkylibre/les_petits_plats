@@ -2,7 +2,7 @@
 import recipes from '../assets/data/recipes.js';
 
 // Définir la classe Recipe
-class Recipe {
+export class Recipe {
     constructor(name, image, time, description, ingredients) {
         this.name = name;
         this.image = image;
