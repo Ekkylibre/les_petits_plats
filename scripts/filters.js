@@ -150,11 +150,6 @@ function displayAllRecipes() {
 
 // Modifier la fonction pour filtrer les recettes en fonction des ingrédients sélectionnés
 function filterRecipesByIngredient(ingredientName) {
-    if (!ingredientName) {
-        // Si aucun ingrédient n'est sélectionné, afficher toutes les recettes
-        displayAllRecipes();
-        return;
-    }
 
     const filteredRecipes = recipes.filter(recipe => {
         return recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase() === ingredientName);
@@ -163,6 +158,32 @@ function filterRecipesByIngredient(ingredientName) {
     const recipesContainer = document.querySelector('.recipes-cards');
     recipesContainer.innerHTML = '';
     // Afficher les recettes filtrées dans le DOM
+    filteredRecipes.forEach(recipe => {
+        const recipeInstance = new Recipe(recipe.name, recipe.image, recipe.time, recipe.description, recipe.ingredients);
+        recipesContainer.insertAdjacentHTML('beforeend', recipeInstance.render());
+    });
+}
+
+// Modifier la fonction pour filtrer les recettes par appareil
+function filterRecipesByAppliance(applianceName) {
+    const filteredRecipes = recipes.filter(recipe => {
+        return recipe.appliance.toLowerCase() === applianceName;
+    });
+    updateRecipesDOM(filteredRecipes);
+}
+
+// Modifier la fonction pour filtrer les recettes par ustensile
+function filterRecipesByUtensil(utensilName) {
+    const filteredRecipes = recipes.filter(recipe => {
+        return recipe.ustensils.some(utensil => utensil.toLowerCase() === utensilName);
+    });
+    updateRecipesDOM(filteredRecipes);
+}
+
+// Fonction pour mettre à jour le DOM avec les recettes filtrées
+function updateRecipesDOM(filteredRecipes) {
+    const recipesContainer = document.querySelector('.recipes-cards');
+    recipesContainer.innerHTML = '';
     filteredRecipes.forEach(recipe => {
         const recipeInstance = new Recipe(recipe.name, recipe.image, recipe.time, recipe.description, recipe.ingredients);
         recipesContainer.insertAdjacentHTML('beforeend', recipeInstance.render());
@@ -181,8 +202,36 @@ function addClickEventToIngredientItems() {
     });
 }
 
+// Fonction pour ajouter des gestionnaires d'événements aux éléments de la liste d'appareils
+function addClickEventToApplianceItems() {
+    const applianceItems = document.querySelectorAll('.dropdown-menu-appliance .dropdown-item');
+    applianceItems.forEach(item => {
+        item.addEventListener('click', function (event) {
+            event.preventDefault();
+            const applianceName = event.target.innerText.toLowerCase();
+            filterRecipesByAppliance(applianceName);
+        });
+    });
+}
+
+// Fonction pour ajouter des gestionnaires d'événements aux éléments de la liste d'ustensiles
+function addClickEventToUtensilItems() {
+    const utensilItems = document.querySelectorAll('.dropdown-menu-utensil .dropdown-item');
+    utensilItems.forEach(item => {
+        item.addEventListener('click', function (event) {
+            event.preventDefault();
+            const utensilName = event.target.innerText.toLowerCase();
+            filterRecipesByUtensil(utensilName);
+        });
+    });
+}
+
 // Appeler la fonction pour afficher toutes les recettes par défaut
 displayAllRecipes();
 
 // Appeler la fonction pour ajouter des gestionnaires d'événements aux éléments de la liste d'ingrédients
 addClickEventToIngredientItems();
+
+// Appeler les fonctions pour ajouter les gestionnaires d'événements aux éléments des listes d'appareils et d'ustensiles
+addClickEventToApplianceItems();
+addClickEventToUtensilItems();
