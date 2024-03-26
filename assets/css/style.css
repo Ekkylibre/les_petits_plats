@@ -89,6 +89,7 @@ main .dropdown-container .dropdown-button .dropdown .dropdown-menu-appliance,
 main .dropdown-container .dropdown-button .dropdown .dropdown-menu-utensil {
   height: 324px;
   overflow: hidden;
+  overflow-y: scroll;
 }
 main .dropdown-container .dropdown-menu input {
   margin: auto 16px 11px 16px;

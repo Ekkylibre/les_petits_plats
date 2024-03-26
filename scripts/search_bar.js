@@ -1,7 +1,6 @@
 import recipes from '../assets/data/recipes.js';
 import { updateRecipesDOM, allIngredients, allAppliances, allUtensils } from './filters.js';
 
-
 // Ajouter un gestionnaire d'événements à l'input de recherche
 const searchInput = document.querySelector('.search-bar input[type="text"]');
 searchInput.addEventListener('input', function() {
@@ -13,7 +12,8 @@ searchInput.addEventListener('input', function() {
             recipe.name.toLowerCase().includes(searchText) || // Vérifier le nom de la recette
             recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(searchText)) || // Vérifier les ingrédients de la recette
             recipe.appliance.toLowerCase().includes(searchText) || // Vérifier l'appareil de la recette
-            recipe.ustensils.some(utensil => utensil.toLowerCase().includes(searchText)) // Vérifier les ustensiles de la recette
+            recipe.ustensils.some(utensil => utensil.toLowerCase().includes(searchText)) || // Vérifier les ustensiles de la recette
+            recipe.description.toLowerCase().includes(searchText) // Vérifier la description de la recette
         );
     });
 
@@ -34,8 +34,8 @@ function showSuggestions(searchText) {
         return;
     }
 
-    const allItems = [...Object.keys(allIngredients), ...Object.keys(allAppliances), ...Object.keys(allUtensils)];
-    const matchingItems = allItems.filter(item => item.startsWith(searchText.toLowerCase()));
+    const allItems = [...Object.keys(allIngredients), ...Object.keys(allAppliances), ...Object.keys(allUtensils), ...recipes.map(recipe => recipe.name), ...recipes.map(recipe => recipe.description.split(' ')).flat()];
+    const matchingItems = allItems.filter(item => item.toLowerCase().startsWith(searchText.toLowerCase()));
 
     // Si aucune correspondance trouvée, sortir de la fonction
     if (matchingItems.length === 0) {
@@ -75,10 +75,11 @@ document.querySelector('.suggestions-container').addEventListener('click', funct
 function updateRecipesBySuggestion(suggestion) {
     const filteredRecipes = recipes.filter(recipe => {
         return (
-            recipe.name.toLowerCase().includes(suggestion) ||
-            recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(suggestion)) ||
-            recipe.appliance.toLowerCase().includes(suggestion) ||
-            recipe.ustensils.some(utensil => utensil.toLowerCase().includes(suggestion))
+            recipe.name.toLowerCase().includes(suggestion.toLowerCase()) ||
+            recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(suggestion.toLowerCase())) ||
+            recipe.appliance.toLowerCase().includes(suggestion.toLowerCase()) ||
+            recipe.ustensils.some(utensil => utensil.toLowerCase().includes(suggestion.toLowerCase())) ||
+            recipe.description.toLowerCase().includes(suggestion.toLowerCase())
         );
     });
     updateRecipesDOM(filteredRecipes);

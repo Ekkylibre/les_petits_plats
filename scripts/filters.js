@@ -250,3 +250,6 @@ addClickEventToIngredientItems();
 // Appeler les fonctions pour ajouter les gestionnaires d'événements aux éléments des listes d'appareils et d'ustensiles
 addClickEventToApplianceItems();
 addClickEventToUtensilItems();
+
+/* Connection */
+
