@@ -75,30 +75,60 @@ function addClickEventToItems(selector, category) {
 
 // Fonction pour fermer un élément sélectionné
 function closeItem(event) {
-    const selectedItem = event.target.parentElement; // L'élément parent contient à la fois l'élément sélectionné et le bouton de fermeture
-    selectedItem.remove(); // Supprimer l'élément sélectionné de l'affichage uniquement
+    const selectedItem = event.target.closest('.selected-item'); // Utilise closest pour trouver l'élément sélectionné
+    if (!selectedItem) return; // Si aucun élément sélectionné n'est trouvé, sort de la fonction
 
-    // Vérifier si des éléments sélectionnés restent après la fermeture
-    const remainingItems = document.querySelectorAll('.selected-item');
+    const itemName = selectedItem.textContent.trim().toLowerCase();
 
-    // Si aucun élément sélectionné n'est trouvé, afficher toutes les recettes
-    if (remainingItems.length === 0) {
-        displayAllRecipes();
+    selectedItem.remove(); // Supprime l'élément sélectionné
+
+    // Met à jour les recettes en fonction des filtres restants
+    updateRecipesIfItemsRemaining();
+
+    // Met à jour les filtres actifs en supprimant l'élément fermé
+    if (activeFilters.ingredient.includes(itemName)) {
+        activeFilters.ingredient = activeFilters.ingredient.filter(filter => filter !== itemName);
+    } else if (activeFilters.appliance.includes(itemName)) {
+        activeFilters.appliance = activeFilters.appliance.filter(filter => filter !== itemName);
+    } else if (activeFilters.utensil.includes(itemName)) {
+        activeFilters.utensil = activeFilters.utensil.filter(filter => filter !== itemName);
     }
 }
 
+// Fonction pour mettre à jour les recettes si des éléments sélectionnés restent
+function updateRecipesIfItemsRemaining() {
+    const remainingItems = document.querySelectorAll('.selected-item');
+    
+    // Si aucun élément sélectionné n'est trouvé, affiche toutes les recettes
+    if (remainingItems.length === 0) {
+        displayAllRecipes();
+    } else {
+        // Sinon, met à jour les recettes en fonction des filtres restants
+        updateRecipesDOM();
+    }
+}
+// Fonction pour afficher un élément
 function displayItem(itemName) {
     // Vérifier si la balise parent-div existe déjà
-    const parentDiv = document.querySelector('.parent-div');
+    let parentDiv = document.querySelector('.parent-div');
 
-    // Création de la div pour l'élément sélectionné
+    // Création de la div pour l'élément sélectionné si elle n'existe pas
+    if (!parentDiv) {
+        parentDiv = document.createElement('div');
+        parentDiv.classList.add('parent-div');
+        // Insère la div parent juste après la structure .dropdown-container
+        const dropdownContainer = document.querySelector('.dropdown-container');
+        dropdownContainer.insertAdjacentElement('afterend', parentDiv);
+    }
+
+    // Création de l'élément sélectionné
     const itemDiv = document.createElement('div');
     itemDiv.classList.add('selected-item');
     itemDiv.textContent = itemName;
 
-    // Créer un bouton pour fermer l'élément sélectionné avec une icône Bootstrap
+    // Créer un bouton pour fermer l'élément sélectionné
     const closeButton = document.createElement('button');
-    closeButton.innerHTML = '<i class="bi bi-x-lg"></i>'; // Utilisation de l'icône Bootstrap 'x'
+    closeButton.innerHTML = '<i class="bi bi-x-lg"></i>';
     closeButton.classList.add('close-button');
     closeButton.addEventListener('click', closeItem);
 
@@ -107,10 +137,6 @@ function displayItem(itemName) {
 
     // Ajout de la div de l'élément sélectionné à la div parent
     parentDiv.appendChild(itemDiv);
-
-    // Insère la div parent juste après la structure .dropdown-container
-    const dropdownContainer = document.querySelector('.dropdown-container');
-    dropdownContainer.insertAdjacentElement('afterend', parentDiv);
 }
 
 
@@ -230,7 +256,11 @@ export function updateRecipesDOM() {
         const recipeInstance = new Recipe(recipe.name, recipe.image, recipe.time, recipe.description, recipe.ingredients);
         recipesContainer.insertAdjacentHTML('beforeend', recipeInstance.render());
     });
+
+    // Afficher les résultats dans la console
+    console.log("Recipes DOM updated:", filteredRecipes);
 }
+
 
 // Modifier les gestionnaires d'événements pour mettre à jour les filtres actifs
 function addClickEventToIngredientItems() {
