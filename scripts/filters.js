@@ -82,9 +82,6 @@ function closeItem(event) {
 
     selectedItem.remove(); // Supprime l'élément sélectionné
 
-    // Met à jour les recettes en fonction des filtres restants
-    updateRecipesIfItemsRemaining();
-
     // Met à jour les filtres actifs en supprimant l'élément fermé
     if (activeFilters.ingredient.includes(itemName)) {
         activeFilters.ingredient = activeFilters.ingredient.filter(filter => filter !== itemName);
@@ -93,6 +90,9 @@ function closeItem(event) {
     } else if (activeFilters.utensil.includes(itemName)) {
         activeFilters.utensil = activeFilters.utensil.filter(filter => filter !== itemName);
     }
+
+    // Met à jour les recettes en fonction des filtres restants
+    updateRecipesIfItemsRemaining();
 }
 
 // Fonction pour mettre à jour les recettes si des éléments sélectionnés restent
