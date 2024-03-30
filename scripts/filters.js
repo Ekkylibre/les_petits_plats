@@ -103,10 +103,13 @@ function updateRecipesIfItemsRemaining() {
     if (remainingItems.length === 0) {
         displayAllRecipes();
     } else {
-        // Sinon, met à jour les recettes en fonction des filtres restants
-        updateRecipesDOM();
+        // Sinon, récupérer les recettes filtrées en fonction des filtres restants et les mettre à jour
+        const filteredRecipes = getFilteredRecipes();
+        updateRecipesDOM(filteredRecipes);
     }
 }
+
+
 // Fonction pour afficher un élément
 function displayItem(itemName) {
     // Vérifier si la balise parent-div existe déjà
@@ -177,7 +180,6 @@ let activeFilters = {
     appliance: [],
     utensil: []
 };
-console.log(activeFilters)
 
 // Fonction pour afficher toutes les recettes par défaut
 function displayAllRecipes() {
@@ -196,38 +198,10 @@ function displayAllRecipes() {
     }
 }
 
-// Fonction pour filtrer les recettes par ingrédient
-function filterRecipesByIngredient(ingredientName) {
-    // Vérifier si l'ingrédient est déjà présent dans les filtres actifs
-    if (!activeFilters.ingredient.includes(ingredientName)) {
-        activeFilters.ingredient.push(ingredientName); // Ajouter l'ingrédient aux filtres actifs
-        updateRecipesDOM(); // Mettre à jour les recettes affichées
-    }
-}
-
-// Fonction pour filtrer les recettes par appareil
-function filterRecipesByAppliance(applianceName) {
-    // Vérifier si l'appareil est déjà présent dans les filtres actifs
-    if (!activeFilters.appliance.includes(applianceName)) {
-        activeFilters.appliance.push(applianceName); // Ajouter l'appareil aux filtres actifs
-        updateRecipesDOM(); // Mettre à jour les recettes affichées
-    }
-}
-
-// Fonction pour filtrer les recettes par ustensile
-function filterRecipesByUtensil(utensilName) {
-    // Vérifier si l'ustensile est déjà présent dans les filtres actifs
-    if (!activeFilters.utensil.includes(utensilName)) {
-        activeFilters.utensil.push(utensilName); // Ajouter l'ustensile aux filtres actifs
-        updateRecipesDOM(); // Mettre à jour les recettes affichées
-    }
-}
-
-// Fonction pour mettre à jour le DOM avec les recettes filtrées
-export function updateRecipesDOM() {
+// Fonction pour obtenir les recettes filtrées en fonction des filtres actifs
+function getFilteredRecipes() {
     let filteredRecipes = recipes;
 
-    // Appliquer les filtres
     if (activeFilters.ingredient.length > 0) {
         filteredRecipes = filteredRecipes.filter(recipe => {
             return activeFilters.ingredient.every(ingredientName =>
@@ -250,6 +224,39 @@ export function updateRecipesDOM() {
         });
     }
 
+    return filteredRecipes;
+}
+
+// Fonction pour filtrer les recettes par ingrédient
+function filterRecipesByIngredient(ingredientName) {
+    if (!activeFilters.ingredient.includes(ingredientName)) {
+        activeFilters.ingredient.push(ingredientName);
+        const filteredRecipes = getFilteredRecipes();
+        updateRecipesDOM(filteredRecipes); // Mettre à jour les recettes affichées
+    }
+}
+
+// Fonction pour filtrer les recettes par appareil
+function filterRecipesByAppliance(applianceName) {
+    if (!activeFilters.appliance.includes(applianceName)) {
+        activeFilters.appliance.push(applianceName);
+        const filteredRecipes = getFilteredRecipes();
+        updateRecipesDOM(filteredRecipes); // Mettre à jour les recettes affichées
+    }
+}
+
+// Fonction pour filtrer les recettes par ustensile
+function filterRecipesByUtensil(utensilName) {
+    if (!activeFilters.utensil.includes(utensilName)) {
+        activeFilters.utensil.push(utensilName);
+        const filteredRecipes = getFilteredRecipes();
+        updateRecipesDOM(filteredRecipes); // Mettre à jour les recettes affichées
+    }
+}
+
+
+// Fonction pour mettre à jour le DOM avec les recettes filtrées
+export function updateRecipesDOM(filteredRecipes) {
     const recipesContainer = document.querySelector('.recipes-cards');
     recipesContainer.innerHTML = '';
     filteredRecipes.forEach(recipe => {
@@ -257,7 +264,6 @@ export function updateRecipesDOM() {
         recipesContainer.insertAdjacentHTML('beforeend', recipeInstance.render());
     });
 
-    // Afficher les résultats dans la console
     console.log("Recipes DOM updated:", filteredRecipes);
 }
 
