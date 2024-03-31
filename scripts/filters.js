@@ -1,5 +1,6 @@
 import recipes from '../assets/data/recipes.js';
 import { Recipe } from './card.js';
+import {addListToDOM } from './utils.js'
 
 // Fonction générique pour récupérer et stocker des éléments uniques
 function getUniqueItems(items, Constructor) {
@@ -29,11 +30,6 @@ function generateItemList(items) {
     }).join('');
 }
 
-// Ajouter une liste d'éléments au DOM
-function addListToDOM(selector, itemList) {
-    const dropdownMenu = document.querySelector(selector);
-    dropdownMenu.insertAdjacentHTML('beforeend', itemList);
-}
 
 // Récupérer et stocker tous les ingrédients, appareils et ustensiles
 export const allIngredients = getUniqueItems(
