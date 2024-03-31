@@ -1,7 +1,5 @@
 import recipes from '../assets/data/recipes.js';
 import {addListToDOM } from './utils.js'
-import { addClickEventToItems } from './eventHandlers.js'
-import { displayAllRecipes } from './display.js';
 import { filterRecipesByIngredient, filterRecipesByAppliance, filterRecipesByUtensil } from './filter.js'
 
 // Fonction générique pour récupérer et stocker des éléments uniques
@@ -60,10 +58,7 @@ addListToDOM('.dropdown-menu-utensil', utensilListHTML);
 /* Add Items*/
 
 
-// Ajoutez des gestionnaires d'événements aux éléments de la liste d'ingrédients, d'appareils et d'ustensiles
-addClickEventToItems('.dropdown-menu-ingredient', 'ingredient');
-addClickEventToItems('.dropdown-menu-appliance', 'appliance');
-addClickEventToItems('.dropdown-menu-utensil', 'utensil');
+
 
 /* Suggestion */
 
@@ -132,9 +127,6 @@ function addClickEventToUtensilItems() {
         });
     });
 }
-
-// Appeler la fonction pour afficher toutes les recettes par défaut
-displayAllRecipes();
 
 // Appeler les fonctions pour ajouter des gestionnaires d'événements aux éléments de la liste d'ingrédients, d'appareils et d'ustensiles
 addClickEventToIngredientItems();
