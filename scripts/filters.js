@@ -1,6 +1,7 @@
 import recipes from '../assets/data/recipes.js';
 import { Recipe } from './card.js';
 import {addListToDOM } from './utils.js'
+import { closeItem, addClickEventToItems } from './eventHandlers.js'
 
 // Fonction générique pour récupérer et stocker des éléments uniques
 function getUniqueItems(items, Constructor) {
@@ -57,57 +58,10 @@ addListToDOM('.dropdown-menu-utensil', utensilListHTML);
 
 /* Add Items*/
 
-// Ajoute des gestionnaires d'événements à chaque élément de la liste
-function addClickEventToItems(selector, category) {
-    const dropdownItems = document.querySelectorAll(selector + ' .dropdown-item');
-    dropdownItems.forEach(item => {
-        item.addEventListener('click', function (event) {
-            event.preventDefault();
-            const itemName = event.target.innerText.toLowerCase();
-            displayItem(itemName, category);
-        });
-    });
-}
-
-// Fonction pour fermer un élément sélectionné
-function closeItem(event) {
-    const selectedItem = event.target.closest('.selected-item'); // Utilise closest pour trouver l'élément sélectionné
-    if (!selectedItem) return; // Si aucun élément sélectionné n'est trouvé, sort de la fonction
-
-    const itemName = selectedItem.textContent.trim().toLowerCase();
-
-    selectedItem.remove(); // Supprime l'élément sélectionné
-
-    // Met à jour les filtres actifs en supprimant l'élément fermé
-    if (activeFilters.ingredient.includes(itemName)) {
-        activeFilters.ingredient = activeFilters.ingredient.filter(filter => filter !== itemName);
-    } else if (activeFilters.appliance.includes(itemName)) {
-        activeFilters.appliance = activeFilters.appliance.filter(filter => filter !== itemName);
-    } else if (activeFilters.utensil.includes(itemName)) {
-        activeFilters.utensil = activeFilters.utensil.filter(filter => filter !== itemName);
-    }
-
-    // Met à jour les recettes en fonction des filtres restants
-    updateRecipesIfItemsRemaining();
-}
-
-// Fonction pour mettre à jour les recettes si des éléments sélectionnés restent
-function updateRecipesIfItemsRemaining() {
-    const remainingItems = document.querySelectorAll('.selected-item');
-    
-    // Si aucun élément sélectionné n'est trouvé, affiche toutes les recettes
-    if (remainingItems.length === 0) {
-        displayAllRecipes();
-    } else {
-        // Sinon, récupérer les recettes filtrées en fonction des filtres restants et les mettre à jour
-        const filteredRecipes = getFilteredRecipes();
-        updateRecipesDOM(filteredRecipes);
-    }
-}
 
 
 // Fonction pour afficher un élément
-function displayItem(itemName) {
+export function displayItem(itemName) {
     // Vérifier si la balise parent-div existe déjà
     let parentDiv = document.querySelector('.parent-div');
 
@@ -171,14 +125,14 @@ searchInputs.forEach(input => {
 /* Filter */
 
 // Variable globale pour stocker les filtres actifs
-let activeFilters = {
+export let activeFilters = {
     ingredient: [],
     appliance: [],
     utensil: []
 };
 
 // Fonction pour afficher toutes les recettes par défaut
-function displayAllRecipes() {
+export function displayAllRecipes() {
     const recipesContainer = document.querySelector('.recipes-cards');
     recipesContainer.innerHTML = '';
 
@@ -195,7 +149,7 @@ function displayAllRecipes() {
 }
 
 // Fonction pour obtenir les recettes filtrées en fonction des filtres actifs
-function getFilteredRecipes() {
+export function getFilteredRecipes() {
     let filteredRecipes = recipes;
 
     if (activeFilters.ingredient.length > 0) {
