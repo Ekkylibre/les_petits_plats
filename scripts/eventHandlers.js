@@ -1,5 +1,6 @@
-import { activeFilters, getFilteredRecipes, updateRecipesDOM } from './filters.js'
+import { activeFilters } from './filters.js'
 import { displayAllRecipes, displayItem } from './display.js'
+import { getFilteredRecipes, updateRecipesDOM } from './filter.js'
 
 // Ajoute des gestionnaires d'événements à chaque élément de la liste
 export function addClickEventToItems(selector, category) {

@@ -1,5 +1,6 @@
 import recipes from '../assets/data/recipes.js';
-import { updateRecipesDOM, allIngredients, allAppliances, allUtensils } from './filters.js';
+import { allIngredients, allAppliances, allUtensils } from './filters.js';
+import { updateRecipesDOM } from './filter.js'
 
 // Ajouter un gestionnaire d'événements à l'input de recherche
 const searchInput = document.querySelector('.search-bar input[type="text"]');
