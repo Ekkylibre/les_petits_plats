@@ -1,6 +1,6 @@
 import recipes from '../assets/data/recipes.js';
 import { Recipe } from './card.js';
-import { activeFilters } from './filters.js'
+import { activeFilters } from './recipeDropdown.js'
 
 // Fonction pour filtrer les recettes par ingrédient
 export function filterRecipesByIngredient(ingredientName) {
