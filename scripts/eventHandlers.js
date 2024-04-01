@@ -1,4 +1,4 @@
-import { activeFilters } from './filters.js'
+import { activeFilters } from './recipeDropdown.js'
 import { displayAllRecipes, displayItem } from './display.js'
 import { getFilteredRecipes, updateRecipesDOM } from './filter.js'
 

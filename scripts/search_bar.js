@@ -1,5 +1,5 @@
 import recipes from '../assets/data/recipes.js';
-import { allIngredients, allAppliances, allUtensils } from './filters.js';
+import { allIngredients, allAppliances, allUtensils } from './recipeDropdown.js';
 import { updateRecipesDOM } from './filter.js'
 
 // Ajouter un gestionnaire d'événements à l'input de recherche
