@@ -61,7 +61,7 @@ export function getFilteredRecipes() {
 // Fonction pour mettre à jour le DOM avec les recettes filtrées
 export function updateRecipesDOM(filteredRecipes) {
     const recipesContainer = document.querySelector('.recipes-cards');
-    recipesContainer.innerHTML = '';
+    recipesContainer.textContent = '';
     filteredRecipes.forEach(recipe => {
         const recipeInstance = new Recipe(recipe.name, recipe.image, recipe.time, recipe.description, recipe.ingredients);
         recipesContainer.insertAdjacentHTML('beforeend', recipeInstance.render());

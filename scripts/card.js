@@ -45,6 +45,6 @@ recipes.forEach(recipeData => {
     const recipe = new Recipe(recipeData.name, recipeData.image, recipeData.time, recipeData.description, recipeData.ingredients);
     const recipeHtml = recipe.render();
     const recipeElement = document.createElement('div');
-    recipeElement.innerHTML = recipeHtml;
+    recipeElement.textContent = recipeHtml;
     recipesDiv.appendChild(recipeElement);
 });

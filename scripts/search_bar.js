@@ -33,7 +33,7 @@ searchInput.addEventListener('input', function() {
 // Fonction pour afficher les suggestions en fonction du texte entré dans le champ de recherche
 function showSuggestions(searchText) {
     const suggestionsContainer = document.querySelector('.suggestions-container');
-    suggestionsContainer.innerHTML = ''; // Efface les anciennes suggestions
+    suggestionsContainer.textContent = ''; // Efface les anciennes suggestions
 
     // Si la longueur du texte est inférieure à 3, sortir de la fonction
     if (searchText.length < 3) {

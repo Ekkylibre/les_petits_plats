@@ -23,7 +23,7 @@ export function displayItem(itemName) {
 
     // Créer un bouton pour fermer l'élément sélectionné
     const closeButton = document.createElement('button');
-    closeButton.innerHTML = '<i class="bi bi-x-lg"></i>';
+    closeButton.textContent = '<i class="bi bi-x-lg"></i>';
     closeButton.classList.add('close-button');
     closeButton.addEventListener('click', closeItem);
 
@@ -37,7 +37,7 @@ export function displayItem(itemName) {
 // Fonction pour afficher toutes les recettes par défaut
 export function displayAllRecipes() {
     const recipesContainer = document.querySelector('.recipes-cards');
-    recipesContainer.innerHTML = '';
+    recipesContainer.textContent = '';
 
     // Vérifier si des éléments sélectionnés sont déjà présents
     const selectedItems = document.querySelectorAll('.selected-item');
