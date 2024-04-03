@@ -1,20 +1,6 @@
 import recipes from '../assets/data/recipes.js';
-import {addListToDOM } from './utils.js'
+import { addListToDOM, getUniqueItems } from './utils.js'
 import { filterRecipesByIngredient, filterRecipesByAppliance, filterRecipesByUtensil } from './filter.js'
-
-// Fonction générique pour récupérer et stocker des éléments uniques
-function getUniqueItems(items, Constructor) {
-    const itemList = {};
-
-    items.forEach(item => {
-        const itemName = item.toLowerCase();
-        if (!itemList[itemName]) {
-            itemList[itemName] = new Constructor(itemName);
-        }
-    });
-
-    return itemList;
-}
 
 // Classe générique représentant un élément
 class Item {

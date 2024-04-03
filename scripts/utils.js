@@ -1,4 +1,3 @@
-
 // Fonction générique pour récupérer et stocker des éléments uniques
 export function getUniqueItems(items, Constructor) {
     const itemList = {};
