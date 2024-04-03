@@ -17,24 +17,19 @@ function filterRecipes(searchText) {
 
 // Fonction pour mettre à jour le DOM avec les recettes filtrées
 function updateRecipes(searchText) {
-    if (searchText.length >= 3) {
-        const filteredRecipes = filterRecipes(searchText.toLowerCase().trim());
-        updateRecipesDOM(filteredRecipes);
-    } else {
-        updateRecipesDOM(recipes);
-    }
+    const filteredRecipes = searchText.length >= 3 ? filterRecipes(searchText.toLowerCase().trim()) : recipes;
+    updateRecipesDOM(filteredRecipes);
 }
-
-// Ajouter un gestionnaire d'événements à l'input de recherche pour filtrer les recettes
-const searchInput = document.querySelector('.search-bar input[type="text"]');
-searchInput.addEventListener('input', function() {
-    const searchText = this.value;
-    updateRecipes(searchText);
-});
 
 // Fonction pour filtrer les suggestions en fonction du texte de recherche
 function filterSuggestions(searchText) {
-    const allItems = [...Object.keys(allIngredients), ...Object.keys(allAppliances), ...Object.keys(allUtensils), ...recipes.map(recipe => recipe.name), ...recipes.map(recipe => recipe.description.split(' ')).flat()];
+    const allItems = [
+        ...Object.keys(allIngredients),
+        ...Object.keys(allAppliances),
+        ...Object.keys(allUtensils),
+        ...recipes.map(recipe => recipe.name),
+        ...recipes.map(recipe => recipe.description.split(' ')).flat()
+    ];
     return allItems.filter(item => item.toLowerCase().startsWith(searchText.toLowerCase()));
 }
 
@@ -43,7 +38,6 @@ function showSuggestions(searchText) {
     const suggestionsContainer = document.querySelector('.suggestions-container');
     suggestionsContainer.textContent = ''; // Efface les anciennes suggestions
 
-    // Si la longueur du texte est inférieure à 3, sortir de la fonction
     if (searchText.length < 3) {
         suggestionsContainer.style.display = 'none'; // Masquer le conteneur de suggestions
         return;
@@ -51,13 +45,11 @@ function showSuggestions(searchText) {
 
     const matchingItems = filterSuggestions(searchText);
 
-    // Si aucune correspondance trouvée, sortir de la fonction
     if (matchingItems.length === 0) {
         suggestionsContainer.style.display = 'none'; // Masquer le conteneur de suggestions
         return;
     }
 
-    // Créer une liste HTML des suggestions
     const suggestionsList = document.createElement('ul');
     matchingItems.slice(0, 5).forEach(item => {
         const listItem = document.createElement('li');
@@ -65,23 +57,23 @@ function showSuggestions(searchText) {
         suggestionsList.appendChild(listItem);
     });
 
-    // Ajouter la liste de suggestions au conteneur de suggestions
     suggestionsContainer.appendChild(suggestionsList);
     suggestionsContainer.style.display = 'block'; // Afficher le conteneur de suggestions
 }
 
-// Ajouter un gestionnaire d'événements à l'input de recherche pour afficher les suggestions en temps réel
+// Gestionnaire d'événements pour l'input de recherche pour afficher les suggestions en temps réel
+const searchInput = document.querySelector('.search-bar input[type="text"]');
 searchInput.addEventListener('input', function() {
     const searchText = this.value.trim();
     showSuggestions(searchText);
+    updateRecipes(searchText); // Mise à jour des recettes en fonction de la saisie utilisateur
 });
 
-// Ajouter un gestionnaire d'événements pour sélectionner une suggestion
+// Gestionnaire d'événements pour sélectionner une suggestion
 document.querySelector('.suggestions-container').addEventListener('click', function(event) {
     const selectedSuggestion = event.target.textContent;
     searchInput.value = selectedSuggestion;
     showSuggestions('');
-    // Filtrer les recettes en fonction de la suggestion sélectionnée
-    updateRecipes(selectedSuggestion);
+    updateRecipes(selectedSuggestion); // Mise à jour des recettes en fonction de la suggestion sélectionnée
 });
 
