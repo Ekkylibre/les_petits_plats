@@ -2,26 +2,26 @@ import recipes from '../assets/data/recipes.js';
 import { allIngredients, allAppliances, allUtensils } from './recipeDropdown.js';
 import { updateRecipesDOM } from './filter.js';
 
-// Fonction pour filtrer les recettes en fonction du texte de recherche
+// Function to filter recipes based on search text
 function filterRecipes(searchText) {
     return recipes.filter(recipe => {
         return (
-            recipe.name.toLowerCase().includes(searchText) || // Vérifier le nom de la recette
-            recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(searchText)) || // Vérifier les ingrédients de la recette
-            recipe.appliance.toLowerCase().includes(searchText) || // Vérifier l'appareil de la recette
-            recipe.ustensils.some(utensil => utensil.toLowerCase().includes(searchText)) || // Vérifier les ustensiles de la recette
-            recipe.description.toLowerCase().includes(searchText) // Vérifier la description de la recette
+            recipe.name.toLowerCase().includes(searchText) || // Check recipe name
+            recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(searchText)) || // Check recipe ingredients
+            recipe.appliance.toLowerCase().includes(searchText) || // Check recipe appliance
+            recipe.ustensils.some(utensil => utensil.toLowerCase().includes(searchText)) || // Check recipe utensils
+            recipe.description.toLowerCase().includes(searchText) // Check recipe description
         );
     });
 }
 
-// Fonction pour mettre à jour le DOM avec les recettes filtrées
+// Function to update the DOM with filtered recipes
 function updateRecipes(searchText) {
     const filteredRecipes = searchText.length >= 3 ? filterRecipes(searchText.toLowerCase().trim()) : recipes;
     updateRecipesDOM(filteredRecipes);
 }
 
-// Fonction pour filtrer les suggestions en fonction du texte de recherche
+// Function to filter suggestions based on search text
 function filterSuggestions(searchText) {
     const allItems = [
         ...Object.keys(allIngredients),
@@ -33,20 +33,20 @@ function filterSuggestions(searchText) {
     return allItems.filter(item => item.toLowerCase().startsWith(searchText.toLowerCase()));
 }
 
-// Fonction pour afficher les suggestions en fonction du texte de recherche
+// Function to display suggestions based on search text
 function showSuggestions(searchText) {
     const suggestionsContainer = document.querySelector('.suggestions-container');
-    suggestionsContainer.textContent = ''; // Efface les anciennes suggestions
+    suggestionsContainer.textContent = '';
 
     if (searchText.length < 3) {
-        suggestionsContainer.style.display = 'none'; // Masquer le conteneur de suggestions
+        suggestionsContainer.style.display = 'none';
         return;
     }
 
     const matchingItems = filterSuggestions(searchText);
 
     if (matchingItems.length === 0) {
-        suggestionsContainer.style.display = 'none'; // Masquer le conteneur de suggestions
+        suggestionsContainer.style.display = 'none';
         return;
     }
 
@@ -58,22 +58,21 @@ function showSuggestions(searchText) {
     });
 
     suggestionsContainer.appendChild(suggestionsList);
-    suggestionsContainer.style.display = 'block'; // Afficher le conteneur de suggestions
+    suggestionsContainer.style.display = 'block';
 }
 
-// Gestionnaire d'événements pour l'input de recherche pour afficher les suggestions en temps réel
+// Event handler for the search input to display suggestions in real-time
 const searchInput = document.querySelector('.search-bar input[type="text"]');
 searchInput.addEventListener('input', function() {
     const searchText = this.value.trim();
     showSuggestions(searchText);
-    updateRecipes(searchText); // Mise à jour des recettes en fonction de la saisie utilisateur
+    updateRecipes(searchText);
 });
 
-// Gestionnaire d'événements pour sélectionner une suggestion
+// Event handler for selecting a suggestion
 document.querySelector('.suggestions-container').addEventListener('click', function(event) {
     const selectedSuggestion = event.target.textContent;
     searchInput.value = selectedSuggestion;
     showSuggestions('');
-    updateRecipes(selectedSuggestion); // Mise à jour des recettes en fonction de la suggestion sélectionnée
+    updateRecipes(selectedSuggestion);
 });
-

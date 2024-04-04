@@ -1,35 +1,35 @@
 import recipes from '../assets/data/recipes.js';
 import { Recipe } from './card.js';
-import { activeFilters } from './recipeDropdown.js'
+import { activeFilters } from './recipeDropdown.js';
 
-// Fonction pour filtrer les recettes par ingrédient
+// Function to filter recipes by ingredient
 export function filterRecipesByIngredient(ingredientName) {
     if (!activeFilters.ingredient.includes(ingredientName)) {
         activeFilters.ingredient.push(ingredientName);
         const filteredRecipes = getFilteredRecipes();
-        updateRecipesDOM(filteredRecipes); // Mettre à jour les recettes affichées
+        updateRecipesDOM(filteredRecipes);
     }
 }
 
-// Fonction pour filtrer les recettes par appareil
+// Function to filter recipes by appliance
 export function filterRecipesByAppliance(applianceName) {
     if (!activeFilters.appliance.includes(applianceName)) {
         activeFilters.appliance.push(applianceName);
         const filteredRecipes = getFilteredRecipes();
-        updateRecipesDOM(filteredRecipes); // Mettre à jour les recettes affichées
+        updateRecipesDOM(filteredRecipes);
     }
 }
 
-// Fonction pour filtrer les recettes par ustensile
+// Function to filter recipes by utensil
 export function filterRecipesByUtensil(utensilName) {
     if (!activeFilters.utensil.includes(utensilName)) {
         activeFilters.utensil.push(utensilName);
         const filteredRecipes = getFilteredRecipes();
-        updateRecipesDOM(filteredRecipes); // Mettre à jour les recettes affichées
+        updateRecipesDOM(filteredRecipes);
     }
 }
 
-// Fonction pour obtenir les recettes filtrées en fonction des filtres actifs
+// Function to get filtered recipes based on active filters
 export function getFilteredRecipes() {
     let filteredRecipes = recipes;
 
@@ -58,7 +58,7 @@ export function getFilteredRecipes() {
     return filteredRecipes;
 }
 
-// Fonction pour mettre à jour le DOM avec les recettes filtrées
+// Function to update the DOM with filtered recipes
 export function updateRecipesDOM(filteredRecipes) {
     const recipesContainer = document.querySelector('.recipes-cards');
     recipesContainer.textContent = '';
@@ -66,6 +66,4 @@ export function updateRecipesDOM(filteredRecipes) {
         const recipeInstance = new Recipe(recipe.name, recipe.image, recipe.time, recipe.description, recipe.ingredients);
         recipesContainer.insertAdjacentHTML('beforeend', recipeInstance.render());
     });
-
-    console.log("Recipes DOM updated:", filteredRecipes);
 }

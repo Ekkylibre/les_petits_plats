@@ -1,4 +1,4 @@
-// Fonction générique pour récupérer et stocker des éléments uniques
+// Generic function to retrieve and store unique items
 export function getUniqueItems(items, Constructor) {
     const itemList = {};
 
@@ -12,14 +12,14 @@ export function getUniqueItems(items, Constructor) {
     return itemList;
 }
 
-// Fonction générique pour générer des listes d'éléments
+// Generic function to generate item lists
 export function generateItemList(items) {
     return Object.keys(items).map(itemName => {
         return `<li><a class="dropdown-item" href="#">${itemName}</a></li>`;
     }).join('');
 }
 
-// Ajouter une liste d'éléments au DOM
+// Add a list of items to the DOM
 export function addListToDOM(selector, itemList) {
     const dropdownMenu = document.querySelector(selector);
     dropdownMenu.insertAdjacentHTML('beforeend', itemList);

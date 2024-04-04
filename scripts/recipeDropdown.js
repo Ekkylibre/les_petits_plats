@@ -1,23 +1,21 @@
 import recipes from '../assets/data/recipes.js';
-import { addListToDOM, getUniqueItems } from './utils.js'
-import { filterRecipesByIngredient, filterRecipesByAppliance, filterRecipesByUtensil } from './filter.js'
+import { addListToDOM, getUniqueItems } from './utils.js';
+import { filterRecipesByIngredient, filterRecipesByAppliance, filterRecipesByUtensil } from './filter.js';
 
-// Classe générique représentant un élément
 class Item {
     constructor(name) {
         this.name = name.toLowerCase();
     }
 }
 
-// Fonction générique pour générer des listes d'éléments
+// Generic function to generate item lists
 function generateItemList(items) {
     return Object.keys(items).map(itemName => {
         return `<li><a class="dropdown-item" href="#">${itemName}</a></li>`;
     }).join('');
 }
 
-
-// Récupérer et stocker tous les ingrédients, appareils et ustensiles
+// Retrieve and store all ingredients, appliances, and utensils
 export const allIngredients = getUniqueItems(
     recipes.flatMap(recipe => recipe.ingredients.map(ingredient => ingredient.ingredient)),
     Item
@@ -31,56 +29,44 @@ export const allUtensils = getUniqueItems(
     Item
 );
 
-// Générer les listes d'ingrédients, appareils et ustensiles
+// Generate ingredient, appliance, and utensil lists
 const ingredientListHTML = generateItemList(allIngredients);
 const applianceListHTML = generateItemList(allAppliances);
 const utensilListHTML = generateItemList(allUtensils);
 
-// Ajouter les listes au DOM
+// Add lists to the DOM
 addListToDOM('.dropdown-menu-ingredient', ingredientListHTML);
 addListToDOM('.dropdown-menu-appliance', applianceListHTML);
 addListToDOM('.dropdown-menu-utensil', utensilListHTML);
 
-/* Add Items*/
-
-
-
-
-/* Suggestion */
-
-// Ajouter un gestionnaire d'événements à tous les champs de texte
+// Add an event handler to all text fields
 const searchInputs = document.querySelectorAll('.dropdown-menu input[type="text"]');
 searchInputs.forEach(input => {
     input.addEventListener('input', function() {
-        const searchText = this.value.trim().toLowerCase(); // Convertir le texte en minuscules et supprimer les espaces inutiles
+        const searchText = this.value.trim().toLowerCase(); // Convert text to lowercase and remove unnecessary spaces
 
         const itemList = this.parentElement.querySelectorAll('li');
 
-        // Parcourir tous les éléments de la liste associée
         itemList.forEach(item => {
             const itemName = item.textContent.toLowerCase();
 
-            // Vérifier si le texte de recherche est inclus dans le nom de l'élément
             if (itemName.includes(searchText)) {
-                item.style.display = 'block'; // Afficher l'élément si la condition est vraie
+                item.style.display = 'block';
             } else {
-                item.style.display = 'none'; // Masquer l'élément si la condition est fausse
+                item.style.display = 'none';
             }
         });
     });
 });
 
-/* Filter */
-
-// Variable globale pour stocker les filtres actifs
+// Global variable to store active filters
 export let activeFilters = {
     ingredient: [],
     appliance: [],
     utensil: []
 };
 
-
-// Modifier les gestionnaires d'événements pour mettre à jour les filtres actifs
+// Modify event handlers to update active filters
 function addClickEventToIngredientItems() {
     const ingredientItems = document.querySelectorAll('.dropdown-menu-ingredient .dropdown-item');
     ingredientItems.forEach(item => {
@@ -114,7 +100,7 @@ function addClickEventToUtensilItems() {
     });
 }
 
-// Appeler les fonctions pour ajouter des gestionnaires d'événements aux éléments de la liste d'ingrédients, d'appareils et d'ustensiles
+// Call functions to add event handlers to ingredient, appliance, and utensil list items
 addClickEventToIngredientItems();
 addClickEventToApplianceItems();
 addClickEventToUtensilItems();

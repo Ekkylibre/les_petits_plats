@@ -1,7 +1,5 @@
-// Importez les données des recettes
 import recipes from '../assets/data/recipes.js';
 
-// Définir la classe Recipe
 export class Recipe {
     constructor(name, image, time, description, ingredients) {
         this.name = name;
@@ -37,10 +35,8 @@ export class Recipe {
     }
 }
 
-// Sélectionnez la balise <div> où vous voulez afficher les recettes
 const recipesDiv = document.querySelector('.recipes-cards');
 
-// Parcourez toutes les recettes, créez une instance de Recipe pour chacune et affichez-la
 recipes.forEach(recipeData => {
     const recipe = new Recipe(recipeData.name, recipeData.image, recipeData.time, recipeData.description, recipeData.ingredients);
     const recipeHtml = recipe.render();
