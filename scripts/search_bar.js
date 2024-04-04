@@ -18,6 +18,18 @@ function filterRecipes(searchText) {
 // Function to update the DOM with filtered recipes
 function updateRecipes(searchText) {
     const filteredRecipes = searchText.length >= 3 ? filterRecipes(searchText.toLowerCase().trim()) : recipes;
+
+    // Check if searchText has at least 3 characters and no recipes were found
+    if (searchText.length >= 3 && filteredRecipes.length === 0) {
+        const message = `Aucune recette ne contient '${searchText}'.`;
+        const feedbackElement = document.querySelector('.search-feedback');
+        feedbackElement.textContent = message;
+        feedbackElement.style.display = 'block';
+    } else {
+        // Hide the feedback element if there are recipes found or search text is less than 3 characters
+        document.querySelector('.search-feedback').style.display = 'none';
+    }
+
     updateRecipesDOM(filteredRecipes);
 }
 

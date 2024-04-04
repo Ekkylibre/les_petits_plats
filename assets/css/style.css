@@ -186,4 +186,13 @@ main .recipes-cards .recipe-content .recipe-info .font-manrope .ingredients-grid
 }
 main .recipes-cards .recipe-content .recipe-info .font-manrope .ingredients-grid .ingredient-quantity {
   color: #7A7A7A;
+}
+main .search-feedback {
+  display: none;
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+  border-radius: 5px;
 }/*# sourceMappingURL=style.css.map */
