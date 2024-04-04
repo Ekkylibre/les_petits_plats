@@ -23,8 +23,16 @@ export function displayItem(itemName) {
 
     // Créer un bouton pour fermer l'élément sélectionné
     const closeButton = document.createElement('button');
-    closeButton.textContent = '<i class="bi bi-x-lg"></i>';
     closeButton.classList.add('close-button');
+
+    // Créer l'élément pour l'icône Bootstrap
+    const closeIcon = document.createElement('i');
+    closeIcon.classList.add('bi', 'bi-x-lg');
+
+    // Ajouter l'icône à votre bouton
+    closeButton.appendChild(closeIcon);
+
+    // Ajouter un écouteur d'événements pour la fermeture de l'élément sélectionné
     closeButton.addEventListener('click', closeItem);
 
     // Ajout du bouton de fermeture à la div de l'élément sélectionné
