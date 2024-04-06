@@ -27,7 +27,8 @@ function updateRecipes(searchText) {
 
     // Check if searchText has at least 3 characters and no recipes were found
     if (searchText.length >= 3 && filteredRecipes.length === 0) {
-        const message = `Aucune recette ne contient '${searchText}'.`;
+        const message = `Aucune recette ne contient '${searchText}' vous pouvez chercher «
+        tarte aux pommes », « poisson », etc..`;
         const feedbackElement = document.querySelector('.search-feedback');
         feedbackElement.textContent = message;
         feedbackElement.style.display = 'block';
