@@ -36,22 +36,16 @@ addListToDOM('.dropdown-menu-utensil', utensilListHTML);
 const searchInputs = document.querySelectorAll('.dropdown-menu input[type="text"]');
 searchInputs.forEach(input => {
     input.addEventListener('input', function() {
-        console.log("Input détecté.");
         const searchText = this.value.trim().toLowerCase(); // Convert text to lowercase and remove unnecessary spaces
-        console.log("Texte de recherche: ", searchText);
 
         const itemList = this.parentElement.parentElement.querySelectorAll('.dropdown-item');
-        console.log("Nombre d'éléments dans la liste: ", itemList.length);
 
         itemList.forEach(item => {
             const itemName = item.textContent.toLowerCase();
-            console.log("Nom de l'élément: ", itemName);
 
             if (itemName.includes(searchText)) {
-                console.log("Affichage de l'élément: ", itemName);
                 item.style.display = 'block';
             } else {
-                console.log("Masquage de l'élément: ", itemName);
                 item.style.display = 'none';
             }
         });

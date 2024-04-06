@@ -1,16 +1,22 @@
 import recipes from '../assets/data/recipes.js';
 import { allIngredients, allAppliances, allUtensils } from './recipeDropdown.js';
 import { updateRecipesDOM } from './filter.js';
+import { activeFilters } from './recipeDropdown.js';
 
 // Function to filter recipes based on search text
 function filterRecipes(searchText) {
     return recipes.filter(recipe => {
+        const isIngredientMatch = activeFilters.ingredient.length === 0 || activeFilters.ingredient.every(filter => recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(filter)));
+        const isApplianceMatch = activeFilters.appliance.length === 0 || activeFilters.appliance.includes(recipe.appliance.toLowerCase());
+        const isUtensilMatch = activeFilters.utensil.length === 0 || activeFilters.utensil.every(filter => recipe.ustensils.includes(filter.toLowerCase()));
+        
         return (
-            recipe.name.toLowerCase().includes(searchText) || // Check recipe name
-            recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(searchText)) || // Check recipe ingredients
-            recipe.appliance.toLowerCase().includes(searchText) || // Check recipe appliance
-            recipe.ustensils.some(utensil => utensil.toLowerCase().includes(searchText)) || // Check recipe utensils
-            recipe.description.toLowerCase().includes(searchText) // Check recipe description
+            (recipe.name.toLowerCase().includes(searchText) || 
+            recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(searchText)) || 
+            recipe.appliance.toLowerCase().includes(searchText) || 
+            recipe.ustensils.some(utensil => utensil.toLowerCase().includes(searchText)) || 
+            recipe.description.toLowerCase().includes(searchText)) && 
+            isIngredientMatch && isApplianceMatch && isUtensilMatch
         );
     });
 }
@@ -62,8 +68,20 @@ function showSuggestions(searchText) {
         return;
     }
 
+    const filteredSuggestions = matchingItems.filter(item => {
+        const lowerCaseItem = item.toLowerCase();
+        return activeFilters.ingredient.every(filter => lowerCaseItem.includes(filter)) &&
+            activeFilters.appliance.every(filter => lowerCaseItem.includes(filter)) &&
+            activeFilters.utensil.every(filter => lowerCaseItem.includes(filter));
+    });
+
+    if (filteredSuggestions.length === 0) {
+        suggestionsContainer.style.display = 'none';
+        return;
+    }
+
     const suggestionsList = document.createElement('ul');
-    matchingItems.slice(0, 5).forEach(item => {
+    filteredSuggestions.slice(0, 5).forEach(item => {
         const listItem = document.createElement('li');
         listItem.textContent = item;
         suggestionsList.appendChild(listItem);
@@ -72,6 +90,7 @@ function showSuggestions(searchText) {
     suggestionsContainer.appendChild(suggestionsList);
     suggestionsContainer.style.display = 'block';
 }
+
 
 // Event handler for the search input to display suggestions in real-time
 const searchInput = document.querySelector('.search-bar input[type="text"]');
