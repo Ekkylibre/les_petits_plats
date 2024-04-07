@@ -22,7 +22,7 @@ function filterRecipes(searchText) {
 }
 
 // Function to update the DOM with filtered recipes
-function updateRecipes(searchText) {
+export function updateRecipes(searchText) {
     const filteredRecipes = searchText.length >= 3 ? filterRecipes(searchText.toLowerCase().trim()) : recipes;
 
     // Check if searchText has at least 3 characters and no recipes were found
@@ -94,7 +94,7 @@ function showSuggestions(searchText) {
 
 
 // Event handler for the search input to display suggestions in real-time
-const searchInput = document.querySelector('.search-bar input[type="text"]');
+export const searchInput = document.querySelector('.search-bar input[type="text"]');
 searchInput.addEventListener('input', function() {
     const searchText = this.value.trim();
     showSuggestions(searchText);

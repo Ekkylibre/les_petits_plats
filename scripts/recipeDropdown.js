@@ -1,6 +1,7 @@
 import recipes from '../assets/data/recipes.js';
 import { addListToDOM, getUniqueItems, generateItemList } from './utils.js';
 import { filterRecipesByIngredient, filterRecipesByAppliance, filterRecipesByUtensil } from './filter.js';
+import { updateRecipes, searchInput } from './search_bar.js'
 
 class Item {
     constructor(name) {
@@ -59,7 +60,7 @@ export let activeFilters = {
     utensil: []
 };
 
-// Modify event handlers to update active filters
+// Modify event handlers to update active filters and update recipes
 function addClickEventToIngredientItems() {
     const ingredientItems = document.querySelectorAll('.dropdown-menu-ingredient .dropdown-item');
     ingredientItems.forEach(item => {
@@ -67,6 +68,7 @@ function addClickEventToIngredientItems() {
             event.preventDefault();
             const ingredientName = event.target.innerText.toLowerCase();
             filterRecipesByIngredient(ingredientName);
+            updateRecipes(searchInput.value.trim());
         });
     });
 }
@@ -78,6 +80,7 @@ function addClickEventToApplianceItems() {
             event.preventDefault();
             const applianceName = event.target.innerText.toLowerCase();
             filterRecipesByAppliance(applianceName);
+            updateRecipes(searchInput.value.trim());
         });
     });
 }
@@ -89,9 +92,11 @@ function addClickEventToUtensilItems() {
             event.preventDefault();
             const utensilName = event.target.innerText.toLowerCase();
             filterRecipesByUtensil(utensilName);
+            updateRecipes(searchInput.value.trim());
         });
     });
 }
+
 
 // Call functions to add event handlers to ingredient, appliance, and utensil list items
 addClickEventToIngredientItems();
