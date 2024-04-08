@@ -3,7 +3,7 @@ import { allIngredients, allAppliances, allUtensils } from './recipeDropdown.js'
 import { updateRecipesDOM } from './filter.js';
 import { activeFilters } from './recipeDropdown.js';
 
-// Function to filter recipes based on search text
+// Function to filter recipes based on active filters and search text
 function filterRecipes(searchText) {
     return recipes.filter(recipe => {
         const isIngredientMatch = activeFilters.ingredient.length === 0 || activeFilters.ingredient.every(filter => recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(filter)));
@@ -11,7 +11,8 @@ function filterRecipes(searchText) {
         const isUtensilMatch = activeFilters.utensil.length === 0 || activeFilters.utensil.every(filter => recipe.ustensils.includes(filter.toLowerCase()));
         
         return (
-            (recipe.name.toLowerCase().includes(searchText) || 
+            (searchText === '' || // Always include the recipe if searchText is empty
+            recipe.name.toLowerCase().includes(searchText) || 
             recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(searchText)) || 
             recipe.appliance.toLowerCase().includes(searchText) || 
             recipe.ustensils.some(utensil => utensil.toLowerCase().includes(searchText)) || 
@@ -23,12 +24,11 @@ function filterRecipes(searchText) {
 
 // Function to update the DOM with filtered recipes
 export function updateRecipes(searchText) {
-    const filteredRecipes = searchText.length >= 3 ? filterRecipes(searchText.toLowerCase().trim()) : recipes;
+    let filteredRecipes = filterRecipes(searchText.toLowerCase().trim());
 
     // Check if searchText has at least 3 characters and no recipes were found
     if (searchText.length >= 3 && filteredRecipes.length === 0) {
-        const message = `Aucune recette ne contient '${searchText}' vous pouvez chercher «
-        tarte aux pommes », « poisson », etc..`;
+        const message = `Aucune recette ne contient '${searchText}' vous pouvez chercher « tarte aux pommes », « poisson », etc..`;
         const feedbackElement = document.querySelector('.search-feedback');
         feedbackElement.textContent = message;
         feedbackElement.style.display = 'block';
