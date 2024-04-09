@@ -5,21 +5,46 @@ import { activeFilters } from './recipeDropdown.js';
 
 // Function to filter recipes based on active filters and search text
 function filterRecipes(searchText) {
-    return recipes.filter(recipe => {
-        const isIngredientMatch = activeFilters.ingredient.length === 0 || activeFilters.ingredient.every(filter => recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(filter)));
-        const isApplianceMatch = activeFilters.appliance.length === 0 || activeFilters.appliance.includes(recipe.appliance.toLowerCase());
-        const isUtensilMatch = activeFilters.utensil.length === 0 || activeFilters.utensil.every(filter => recipe.ustensils.includes(filter.toLowerCase()));
+    const filteredRecipes = [];
+    
+    for (let i = 0; i < recipes.length; i++) {
+        const recipe = recipes[i];
         
-        return (
-            (searchText === '' || // Always include the recipe if searchText is empty
+        const isIngredientMatch = activeFilters.ingredient.length === 0 || activeFilters.ingredient.every(filter => {
+            for (let j = 0; j < recipe.ingredients.length; j++) {
+                const ingredient = recipe.ingredients[j];
+                if (ingredient.ingredient.toLowerCase().includes(filter)) {
+                    return true;
+                }
+            }
+            return false;
+        });
+        
+        const isApplianceMatch = activeFilters.appliance.length === 0 || activeFilters.appliance.includes(recipe.appliance.toLowerCase());
+        
+        const isUtensilMatch = activeFilters.utensil.length === 0 || activeFilters.utensil.every(filter => {
+            for (let k = 0; k < recipe.ustensils.length; k++) {
+                if (recipe.ustensils[k].toLowerCase().includes(filter)) {
+                    return true;
+                }
+            }
+            return false;
+        });
+        
+        if (
+            (searchText === '' ||
             recipe.name.toLowerCase().includes(searchText) || 
             recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(searchText)) || 
             recipe.appliance.toLowerCase().includes(searchText) || 
             recipe.ustensils.some(utensil => utensil.toLowerCase().includes(searchText)) || 
             recipe.description.toLowerCase().includes(searchText)) && 
             isIngredientMatch && isApplianceMatch && isUtensilMatch
-        );
-    });
+        ) {
+            filteredRecipes.push(recipe);
+        }
+    }
+    
+    return filteredRecipes;
 }
 
 // Function to update the DOM with filtered recipes
